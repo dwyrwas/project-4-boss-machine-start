@@ -15,7 +15,7 @@ const updateMinion = (req, res, next) => {
 }
 
 const deleteMinion = (req, res, next) => {
-    
+
 }
 
-module.exports = {getMinions}
+module.exports = {getMinions, newMinion, getMinionById, updateMinion, deleteMinion}
