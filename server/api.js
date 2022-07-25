@@ -14,16 +14,16 @@ apiRouter.get('/minion:minionId', minionsController.getMinionById);
 apiRouter.delete('/minion:minionId', minionsController.deleteMinion);
 
 //ideas routes
-apiRouter.get('/ideas', ideaController );
-apiRouter.post('/ideas', ideaController);
-apiRouter.get('/ideas', ideaController);
-apiRouter.post('/ideas', ideaController);
-apiRouter.delete('/ideas', ideaController);
+apiRouter.get('/ideas', ideaController.getIdeas);
+apiRouter.post('/ideas', ideaController.newIdea);
+apiRouter.get('/ideas:ideaId', ideaController.getIdeaById);
+apiRouter.post('/ideas:ideaId', ideaController.updateIdea);
+apiRouter.delete('/ideas:ideaId', ideaController.deleteIdea);
 
 //meetings routes
-apiRouter.get('/meetings', meetingsController);
-apiRouter.post('/meetings', meetingsController);
-apiRouter.delete('/meetings', meetingsController);
+apiRouter.get('/meetings', meetingsController.getMeetings);
+apiRouter.post('/meetings', meetingsController.newMeeting);
+apiRouter.delete('/meetings', meetingsController.deleteMeetings);
 
 
 

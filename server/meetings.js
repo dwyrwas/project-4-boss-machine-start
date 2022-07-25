@@ -15,7 +15,10 @@ const newMeeting = (req, res, next) => {
 } 
 
 const deleteMeetings = (req, res, next ) => {
-    deleteAllFromDatabase('meetings');
+    const meetingToDelete = req.params;
+    deleteAllFromDatabase('meetings', meetingToDelete);
+    res.status(200);
+    next();
 }
 
 export default {getMeetings, newMeeting, deleteMeetings};
