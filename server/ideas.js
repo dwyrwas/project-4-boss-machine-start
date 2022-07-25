@@ -1,4 +1,5 @@
 import { addToDatabase, deleteFromDatabasebyId, getAllFromDatabase, updateInstanceInDatabase } from "./db"
+import { checkMillionDollarIdea } from './checkMillionDollarIdea';
 
 const getIdeas = (req, res, next) => {
     const allIdeas = getAllFromDatabase('ideas');
@@ -6,15 +7,17 @@ const getIdeas = (req, res, next) => {
 }
 
 const newIdea = (req, res, next) => {
-    const ideaToAdd = createIdea();
-    addToDatabase('ideas', ideaToAdd);
-    res.status(200).send('New idea created succesfully.');
+    let newRevenue = req.params.weeklyRevenue;
+    let newWeeks = req.params.numWeeks;
+    if (checkMillionDollarIdea === true) {
+        const ideaToAdd = createIdea();
+        addToDatabase('ideas', ideaToAdd);
+        res.status(200).send('New idea created succesfully.');
+    }
+    
 }
 
 const updateIdea = (req, res, next) => {
-    const ideaToUpdateId = req.params.id;
-    const ideas = getAllFromDatabase('ideas');
-    const ideaToUpdate = ideas[ideaToUpdateId];
     ideaToUpdate = updateInstanceInDatabase('ideas', req.params);
     res.status(200).send('Idea successfully updated.');
 }
