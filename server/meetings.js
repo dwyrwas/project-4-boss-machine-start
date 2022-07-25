@@ -1,5 +1,7 @@
-const getMeetings = (req, res, next) => {
+const { getAllFromDatabase } = require("./db")
 
+const getMeetings = (req, res, next) => {
+    getAllFromDatabase('meeting');
 }
 
 const newMeeting = (req, res, next) => {
