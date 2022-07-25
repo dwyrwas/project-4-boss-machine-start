@@ -1,5 +1,5 @@
 const getIdeas = (req, res, next) => {
-    res.send(ideas)
+    
 }
 
 const newIdea = (req, res, next) => {
@@ -17,3 +17,5 @@ const getIdeaById = (req, res, next) => {
 const deleteIdea = (req, res, next) => {
 
 } 
+
+export default {getIdeas, newIdea, updateIdea, getIdeaById, deleteIdea}

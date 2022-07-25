@@ -1,11 +1,13 @@
 import { getAllFromDatabase, createMinion, addToDatabase } from "./db";
 
 const getMinions = (req, res) => {
-    getAllFromDatabase('minions');
+    const allMinions = getAllFromDatabase('minions');
+    res.JSON(allMinions);
 }
 
 const newMinion = (req, res, next) => {
-    const minionToAdd = createMinion({});
+    const minion = req.params;
+    const minionToAdd = createMinion(minion);
     addToDatabase('minion', minionToAdd);
 }
 
