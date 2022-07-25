@@ -2,9 +2,9 @@ const express = require('express');
 const apiRouter = express.Router();
 
 //define controllers
-const minionsController = require('./minions').default;
-const ideaController = require('./ideas').default;
-const meetingsController = require('./meetings').default;
+const minionsController = require('./minions');
+const ideaController = require('./ideas');
+const meetingsController = require('./meetings');
 
 //minions routes
 apiRouter.get('/minions', minionsController.getMinions);

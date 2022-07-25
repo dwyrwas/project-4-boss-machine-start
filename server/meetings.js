@@ -2,23 +2,26 @@ const { getAllFromDatabase, createMeeting, addToDatabase, deleteAllFromDatabase 
 
 const getMeetings = (req, res, next) => {
     const allMeetings = getAllFromDatabase('meetings');
-    req.JSON(allMeetings);
-    next();
+    res.send(allMeetings);
 }
 
 const newMeeting = (req, res, next) => {
-    const meeting = req.params;
+    const meeting = req.params.body;
     const meetingToAdd = createMeeting(meeting);
     addToDatabase('meetings', meetingToAdd);
-    res.status(200);
+    res.status(201).send();
     next();
 } 
 
 const deleteMeetings = (req, res, next ) => {
-    const meetingToDelete = req.params;
-    deleteAllFromDatabase('meetings', meetingToDelete);
-    res.status(200);
-    next();
+    const meetings = getAllFromDatabase('meetings');
+    if (meetings.length === 0) {
+        res.status(204).send();
+        next();
+    } else {
+        res.status(200).send(deleteAllFromDatabase('meetings'));
+        next();
+    }
 }
 
-export default {getMeetings, newMeeting, deleteMeetings};
+module.exports =  {getMeetings, newMeeting, deleteMeetings};

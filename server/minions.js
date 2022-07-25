@@ -1,7 +1,7 @@
-import { getAllFromDatabase, createMinion, addToDatabase, deleteFromDatabasebyId, updateInstanceInDatabase } from "./db";
+const { getAllFromDatabase, createMinion, addToDatabase, deleteFromDatabasebyId, updateInstanceInDatabase } = require('./db'); 
 
 
-const getMinions = (req, res, next) => {
+const getMinions = (req, res) => {
     const allMinions = getAllFromDatabase('minions');
     res.send(allMinions);
 }
@@ -9,26 +9,25 @@ const getMinions = (req, res, next) => {
 const newMinion = (req, res, next) => {
     const minion = req.params;
     const minionToAdd = createMinion(minion);
-    addToDatabase('minion', minionToAdd);
-    res.status(201);
+    res.status(201).send(addToDatabase('minions', minionToAdd));
 }
 
 const getMinionById = (req, res, next) => {
-    const minionId = req.params.id;
+    const minionId = Number(req.params.id);
     const foundMinion = getFromDatabaseById('minions', minionId);
     if (foundMinion === null) {
         res.status(404).send('Minion not found.');
     } else {
-        res.send(foundMinion);
+        res.status(200).send(foundMinion);
     }
 }
 
 const updateMinion = (req, res, next) => {
-    const minionId = req.params.id;
+    const minionId = Number(req.params.id);
     const minions = getAllFromDatabase('minions');
     const minionToUpdate = minions[minions.findIndex(minionId)];
-    updateInstanceInDatabase('minions', minionToUpdate);
-    res.status(200).send('Minion updated.');
+    updateInstanceInDatabase('minions', req.params);
+    res.status(200).send(minions[minions.findIndex(minionId)]);
 }
 
 const deleteMinion = (req, res, next) => {
@@ -37,4 +36,4 @@ const deleteMinion = (req, res, next) => {
     res.status(204).send('Minion deleted.');
 }
 
-export default {getMinions, newMinion, getMinionById, updateMinion, deleteMinion}
+module.exports =  {getMinions, newMinion, getMinionById, updateMinion, deleteMinion}
