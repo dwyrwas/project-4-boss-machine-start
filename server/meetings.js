@@ -6,7 +6,7 @@ const getMeetings = (req, res, next) => {
 }
 
 const newMeeting = (req, res, next) => {
-    const meeting = req.params.body;
+    const meeting = req.params;
     const meetingToAdd = createMeeting(meeting);
     addToDatabase('meetings', meetingToAdd);
     res.status(201).send();

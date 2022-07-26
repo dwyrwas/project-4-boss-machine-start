@@ -1,4 +1,4 @@
-const { getAllFromDatabase, createMinion, addToDatabase, deleteFromDatabasebyId, updateInstanceInDatabase } = require('./db'); 
+const { getAllFromDatabase, createMinion, addToDatabase, deleteFromDatabasebyId, updateInstanceInDatabase, getFromDatabaseById } = require('./db'); 
 
 
 const getMinions = (req, res) => {
@@ -13,7 +13,7 @@ const newMinion = (req, res, next) => {
 }
 
 const getMinionById = (req, res, next) => {
-    const minionId = Number(req.params.id);
+    const minionId = req.params.minionId;
     const foundMinion = getFromDatabaseById('minions', minionId);
     if (foundMinion === null) {
         res.status(404).send('Minion not found.');
@@ -23,7 +23,7 @@ const getMinionById = (req, res, next) => {
 }
 
 const updateMinion = (req, res, next) => {
-    const minionId = Number(req.params.id);
+    const minionId = req.params.minionId;
     const minions = getAllFromDatabase('minions');
     const minionToUpdate = minions[minions.findIndex(minionId)];
     updateInstanceInDatabase('minions', req.params);
@@ -31,7 +31,7 @@ const updateMinion = (req, res, next) => {
 }
 
 const deleteMinion = (req, res, next) => {
-    const minionId = req.paras.id;
+    const minionId = req.params.minionId;
     deleteFromDatabasebyId('minions', minionId);
     res.status(204).send('Minion deleted.');
 }

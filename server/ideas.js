@@ -27,7 +27,7 @@ const getIdeaById = (req, res, next) => {
 }
 
 const deleteIdea = (req, res, next) => {
-    const ideaId = Number(req.params.id);
+    const ideaId = req.params.id;
     const deleteStatus = deleteFromDatabasebyId('ideas', ideaId);
     if (deleteStatus === true) {
         res.status(200).send();
