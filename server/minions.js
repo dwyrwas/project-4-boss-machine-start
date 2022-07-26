@@ -16,7 +16,12 @@ const newMinion = (req, res, next) => {
 const getMinionById = (req, res, next) => {
     const minionId = req.params.minionId;
     const foundMinion = getFromDatabaseById('minions', minionId);
-    res.status(200).send(foundMinion);
+    if (foundMinion !== null) {
+        res.status(200).send(foundMinion);
+    } else {
+        res.status(404).send();
+        next();
+    }
 }
 
 const updateMinion = (req, res, next) => {

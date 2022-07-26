@@ -17,8 +17,7 @@ const updateIdea = (req, res, next) => {
     const goodIdea = checkMillionDollarIdea(req.body.numWeeks, req.body.weeklyRevenue, next);
     const ideaUpdates = req.body;
     const ideaToUpdateId = req.params.ideaId;
-    updateInstanceInDatabase('ideas', ideaUpdates);
-    const updatedIdea = getFromDatabaseById('ideas', ideaToUpdateId);
+    const updatedIdea = updateInstanceInDatabase('ideas', ideaUpdates);
     res.status(200).send(updatedIdea);
 }
 
