@@ -1,7 +1,9 @@
 
-function checkMillionDollarIdea (numWeeks, weeklyRevenue, id) {
+
+function checkMillionDollarIdea (numWeeks, weeklyRevenue, next) {
     const value = numWeeks * weeklyRevenue;
 if (value >= 1000000){
+    next();
     return true;
 } else {
     return false;

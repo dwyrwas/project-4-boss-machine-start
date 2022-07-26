@@ -9,14 +9,12 @@ const getIdeas = (req, res, next) => {
 const newIdea = (req, res, next) => {
     const ideaToAdd = req.body;
     ideaToAdd.id = '';
-    if (checkMillionDollarIdea(ideaToAdd.newRevenue, ideaToAdd.newWeeks, ideaToAdd.id) === true) {
-        const addedIdea = addToDatabase('ideas', ideaToAdd);
-        res.status(200).send(addedIdea);
-    }
-    
+    const addedIdea = addToDatabase('ideas', ideaToAdd);
+    res.status(201).send(addedIdea);
 }
 
 const updateIdea = (req, res, next) => {
+    const goodIdea = checkMillionDollarIdea(req.body.numWeeks, req.body.weeklyRevenue, next);
     const ideaUpdates = req.body;
     const ideaToUpdateId = req.params.ideaId;
     updateInstanceInDatabase('ideas', ideaUpdates);
@@ -33,7 +31,7 @@ const getIdeaById = (req, res, next) => {
 const deleteIdea = (req, res, next) => {
     const ideaId = req.params.ideaId;
     deleteFromDatabasebyId('ideas', ideaId);
-    res.status(200).send();
+    res.status(204).send();
 } 
 
 module.exports = {getIdeas, newIdea, updateIdea, getIdeaById, deleteIdea}

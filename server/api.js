@@ -5,6 +5,7 @@ const apiRouter = express.Router();
 const minionsController = require('./minions');
 const ideaController = require('./ideas');
 const meetingsController = require('./meetings');
+const checkMillionDollarIdea = require('./checkMillionDollarIdea');
 
 //minions routes
 apiRouter.get('/minions', minionsController.getMinions);
