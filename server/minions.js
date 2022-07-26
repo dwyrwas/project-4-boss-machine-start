@@ -7,27 +7,22 @@ const getMinions = (req, res) => {
 }
 
 const newMinion = (req, res, next) => {
-    const minion = req.params;
-    const minionToAdd = createMinion(minion);
-    res.status(201).send(addToDatabase('minions', minionToAdd));
+    const minionToAdd = req.body;
+    minionToAdd.id = '';
+    const newMinion = addToDatabase('minions', minionToAdd);
+    res.status(201).send(newMinion);
 }
 
 const getMinionById = (req, res, next) => {
     const minionId = req.params.minionId;
     const foundMinion = getFromDatabaseById('minions', minionId);
-    if (foundMinion === null) {
-        res.status(404).send('Minion not found.');
-    } else {
-        res.status(200).send(foundMinion);
-    }
+    res.status(200).send(foundMinion);
 }
 
 const updateMinion = (req, res, next) => {
-    const minionId = req.params.minionId;
-    const minions = getAllFromDatabase('minions');
-    const minionToUpdate = minions[minions.findIndex(minionId)];
-    updateInstanceInDatabase('minions', req.params);
-    res.status(200).send(minions[minions.findIndex(minionId)]);
+    const minionUpdates = req.body;
+    const updatedMinion = updateInstanceInDatabase('minions', minionUpdates); 
+    res.status(200).send(updatedMinion);
 }
 
 const deleteMinion = (req, res, next) => {

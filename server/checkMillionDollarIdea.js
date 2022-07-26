@@ -1,6 +1,5 @@
-const e = require("express");
 
-const checkMillionDollarIdea = (numWeeks, weeklyRevenue, next) => {
+function checkMillionDollarIdea (numWeeks, weeklyRevenue, id) {
     const value = numWeeks * weeklyRevenue;
 if (value >= 1000000){
     return true;
@@ -8,5 +7,6 @@ if (value >= 1000000){
     return false;
 }
 };
+
 // Leave this exports assignment so that the function can be used elsewhere
-module.exports = checkMillionDollarIdea;
+module.exports = {checkMillionDollarIdea};

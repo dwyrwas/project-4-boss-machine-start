@@ -6,22 +6,14 @@ const getMeetings = (req, res, next) => {
 }
 
 const newMeeting = (req, res, next) => {
-    const meeting = req.params;
-    const meetingToAdd = createMeeting(meeting);
+    const meetingToAdd = createMeeting();
     addToDatabase('meetings', meetingToAdd);
-    res.status(201).send();
-    next();
+    res.status(201).send(meetingToAdd);
 } 
 
 const deleteMeetings = (req, res, next ) => {
-    const meetings = getAllFromDatabase('meetings');
-    if (meetings.length === 0) {
-        res.status(204).send();
-        next();
-    } else {
-        res.status(200).send(deleteAllFromDatabase('meetings'));
-        next();
-    }
+    deleteAllFromDatabase('meetings');
+    res.status(204).send();
 }
 
 module.exports =  {getMeetings, newMeeting, deleteMeetings};

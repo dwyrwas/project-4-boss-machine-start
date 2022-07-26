@@ -1,4 +1,4 @@
-const { addToDatabase, deleteFromDatabasebyId, getAllFromDatabase, updateInstanceInDatabase } = require('./db');
+const { addToDatabase, deleteFromDatabasebyId, getAllFromDatabase, updateInstanceInDatabase, getFromDatabaseById } = require('./db');
 const { checkMillionDollarIdea } = require('./checkMillionDollarIdea');
 
 const getIdeas = (req, res, next) => {
@@ -7,33 +7,33 @@ const getIdeas = (req, res, next) => {
 }
 
 const newIdea = (req, res, next) => {
-    let newRevenue = req.params.weeklyRevenue;
-    let newWeeks = req.params.numWeeks;
-    if (checkMillionDollarIdea(newRevenue, newWeeks) === true) {
-        const ideaToAdd = createIdea();
-        addToDatabase('ideas', ideaToAdd);
-        res.status(200).send('New idea created succesfully.');
+    const ideaToAdd = req.body;
+    ideaToAdd.id = '';
+    if (checkMillionDollarIdea(ideaToAdd.newRevenue, ideaToAdd.newWeeks, ideaToAdd.id) === true) {
+        const addedIdea = addToDatabase('ideas', ideaToAdd);
+        res.status(200).send(addedIdea);
     }
     
 }
 
 const updateIdea = (req, res, next) => {
-    updateInstanceInDatabase('ideas', req.params);
-    res.status(200).send('Idea successfully updated.');
+    const ideaUpdates = req.body;
+    const ideaToUpdateId = req.params.ideaId;
+    updateInstanceInDatabase('ideas', ideaUpdates);
+    const updatedIdea = getFromDatabaseById('ideas', ideaToUpdateId);
+    res.status(200).send(updatedIdea);
 }
 
 const getIdeaById = (req, res, next) => {
-    const ideaId = req.params.id;
+    const ideaId = req.params.ideaId;
+    const foundIdea = getFromDatabaseById('ideas', ideaId);
+    res.status(200).send(foundIdea);
 }
 
 const deleteIdea = (req, res, next) => {
-    const ideaId = req.params.id;
-    const deleteStatus = deleteFromDatabasebyId('ideas', ideaId);
-    if (deleteStatus === true) {
-        res.status(200).send();
-    } else {
-        res.status(204).send();
-    }
+    const ideaId = req.params.ideaId;
+    deleteFromDatabasebyId('ideas', ideaId);
+    res.status(200).send();
 } 
 
 module.exports = {getIdeas, newIdea, updateIdea, getIdeaById, deleteIdea}
